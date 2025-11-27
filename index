@@ -1,1 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCL.Universe - Skala Alam Semesta</title>
+    
+    <!-- Memuat font Inter dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
+    <style>
+        /* CSS Reset dan Pengaturan Dasar */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Kontainer untuk gambar background full-screen */
+        #background-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            
+            transition: background-image 0.5s ease-in-out;
+            
+            /* Gambar default saat halaman dimuat */
+            background-image: url('https://placehold.co/1920x1080/0c0a1f/f0f0f0?text=DCL.Universe');
+            background-color: #0c0a1f;
+        }
+
+        /* Overlay gelap di atas gambar background agar teks lebih mudah dibaca */
+        #background-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Overlay hitam 50% */
+            z-index: -1;
+        }
+
+        body {
+            background-color: transparent;
+            color: #f0f0f0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            padding: 0;
+            display: block;
+        }
+
+        /* HEADER: Posisikan di KIRI ATAS */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(29, 27, 51, 0.85);
+            border-radius: 12px;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            text-align: left;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            color: #a0a0c0;
+        }
+
+        /* MAIN: Kontrol Posisikan di BAWAH TENGAH */
+        main {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 550px;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        /* Kartu utama untuk menampilkan objek */
+        #display-card {
+            background-color: rgba(29, 27, 51, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 550px; 
+            width: 100%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+        }
+        
+        #object-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #FFF;
+        }
+
+        #object-size {
+            font-size: 1rem;
+            color: #a0a0c0; 
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        #object-description {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #d0d0e0;
+        }
+
+        /* Kontainer untuk slider */
+        #slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 550px;
+            gap: 15px;
+            font-weight: 700;
+
+            background-color: rgba(29, 27, 51, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #slider-container span {
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+        
+        /* Mengatur style slider */
+        #scale-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            flex-grow: 1;
+            height: 12px;
+            background: linear-gradient(90deg, #E91E63 0%, #4CAF50 50%, #FFC107 100%);
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* ... Style slider thumb (tombol geser) tidak berubah ... */
+        #scale-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            background: #ffffff;
+            border-radius: 50%;
+            border: 4px solid #1d1b33;
+            transition: background 0.2s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #scale-slider::-webkit-slider-thumb:hover {
+            background: #ffffff;
+            border-color: #03A9F4;
+        }
+        #scale-slider::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            background: #ffffff;
+            border-radius: 50%;
+            border: 4px solid #1d1b33;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #scale-slider::-moz-range-thumb:hover {
+            background: #ffffff;
+            border-color: #03A9F4;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Kontainer background ditaruh di sini -->
+    <div id="background-image-container"></div>
+
+    <!-- Header sekarang FIXED di kiri atas -->
+    <header>
+        <h1>🌌 DCL.Universe</h1>
+        <p>Jelajahi Skala Alam Semesta</p>
+    </header>
+
+    <!-- MAIN sekarang FIXED di bawah tengah -->
+    <main>
+        <!-- Kartu Display -->
+        <div id="display-card">
+            <h2 id="object-name">Geser Slider</h2>
+            <p id="object-size">untuk memulai</p>
+            <p id="object-description">Pilih sebuah objek di bawah untuk melihat detailnya.</p>
+            <!-- Tombol 'Ganti Gambar' telah dihapus di sini -->
+        </div>
+
+        <!-- Slider Kontrol -->
+        <div id="slider-container">
+            <span>Terkecil</span>
+            <input type="range" id="scale-slider" min="0" max="100" value="5">
+            <span>Terbesar</span>
+        </div>
+    </main>
+    
+    <!-- Modal pengeditan telah dihapus di sini -->
+
+    <script>
+        // Menjalankan kode setelah semua elemen HTML dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Database Objek Alam Semesta ---
+            // ************ GANTI URL GAMBAR ANDA DI SINI ************
+            const universeData = [
+                {
+                    name: "Virus Corona",
+                    sizeText: "~120 Nanometer (0.00000012m)",
+                    description: "Salah satu partikel biologi terkecil, jauh lebih kecil dari sel. Tidak dapat dilihat tanpa mikroskop elektron.",
+                    // <--- GANTI URL INI DENGAN GAMBAR VIRUS CORONA ANDA
+                    imageUrl: "corona.jpg" 
+                },
+                {
+                    name: "Sel Darah Merah",
+                    sizeText: "~8 Mikrometer (0.000008m)",
+                    description: "Unit kehidupan yang sangat kecil, membawa oksigen ke seluruh tubuh kita. Miliaran sel seperti ini ada di setiap tetes darah.",
+                    imageUrl: "sel.jpg"
+                },
+                {
+                    name: "Sehelai Rambut",
+                    sizeText: "~100 Mikrometer (0.0001m)",
+                    description: "Lebar rata-rata rambut manusia. Di sinilah batas pandangan mata telanjang mulai kabur.",
+                    imageUrl: "rambut.webp"
+                },
+                {
+                    name: "Semut",
+                    sizeText: "~5 Milimeter",
+                    description: "Serangga sosial yang umum kita temui. Terlihat jelas oleh mata telanjang.",
+                    imageUrl: "semut.webp"
+                },
+                {
+                    name: "Tangan Manusia",
+                    sizeText: "~0.2 Meter",
+                    description: "Ukuran khas anggota tubuh kita. Skala yang paling akrab dengan kehidupan sehari-hari.",
+                    imageUrl: "jari.jpg"
+                },
+                {
+                    name: "Manusia",
+                    sizeText: "~1.7 Meter",
+                    description: "Ukuran kita sebagai titik referensi. Kita berada di tengah-tengah antara yang sangat kecil dan sangat besar.",
+                    // <--- GANTI URL INI DENGAN GAMBAR MANUSIA ANDA
+                    imageUrl: "mansi.jpg" 
+                },
+                {
+                    name: "Paus Biru",
+                    sizeText: "~30 Meter",
+                    description: "Hewan terbesar yang pernah ada di Bumi, lebih besar dari dinosaurus terbesar sekalipun.",
+                    imageUrl: "paus.avif"
+                },
+                {
+                    name: "Gedung Tertinggi",
+                    sizeText: "~830 Meter",
+                    description: "Struktur buatan manusia tertinggi. Ini adalah batas vertikal yang bisa kita capai di Bumi.",
+                    imageUrl: "gedung.jpeg"
+                },
+                {
+                    name: "Gunung Everest",
+                    sizeText: "8.848 Meter",
+                    description: "Titik tertinggi di permukaan planet Bumi, puncaknya hampir mencapai lapisan atmosfer tempat pesawat jet terbang.",
+                    imageUrl: "gununge.jpg"
+                },
+                {
+                    name: "Benua Australia",
+                    sizeText: "Lebar ~4.000 Km",
+                    description: "Ukuran benua yang sangat besar. Menggambarkan betapa luasnya permukaan Bumi.",
+                    imageUrl: "benua.png"
+                },
+                {
+                    name: "Planet Bumi",
+                    sizeText: "Diameter 12.742 Km",
+                    description: "Rumah kita. Sebuah planet berbatu kecil di tata surya yang sangat luas.",
+                    imageUrl: "bumi.jpeg"
+                },
+                {
+                    name: "Matahari",
+                    sizeText: "Diameter 1,39 Juta Km",
+                    description: "Bintang di pusat tata surya kita. Sangat besar, bisa memuat sekitar 1,3 juta planet Bumi di dalamnya.",
+                    imageUrl: "matahari.jpg"
+                },
+                {
+                    name: "Tata Surya",
+                    sizeText: "Diameter ~287 Miliar Km (Hingga Sabuk Kuiper)",
+                    description: "Meliputi Matahari, planet-planet, dan semua objek yang terikat secara gravitasi. Jarak yang sangat jauh.",
+                    imageUrl: "tatasurya.jpg"
+                },
+                {
+                    name: "Galaksi Bima Sakti",
+                    sizeText: "Diameter 100.000 Tahun Cahaya",
+                    description: "Galaksi spiral tempat tata surya kita berada. Terdiri dari ratusan miliar bintang, termasuk Matahari.",
+                    imageUrl: "galaksi.png"
+                },
+                {
+                    name: "Gugus Virgo",
+                    sizeText: "Diameter 10 Juta Tahun Cahaya",
+                    description: "Sebuah gugus galaksi di mana Bima Sakti adalah bagian darinya. Ini adalah skala multi-galaksi.",
+                    imageUrl: "virgogugus.jpg"
+                },
+                {
+                    name: "Alam Semesta Teramati",
+                    sizeText: "Diameter ~93 Miliar Tahun Cahaya",
+                    description: "Keseluruhan ruang, waktu, materi, dan energi yang bisa kita amati dari Bumi. Ini adalah skala terbesar yang kita ketahui.",
+                    imageUrl: "alamsemesta.jpg"
+                }
+            ];
+            // *******************************************************
+
+
+            // --- Menghubungkan Elemen HTML ke JavaScript ---
+            const slider = document.getElementById('scale-slider');
+            const backgroundContainer = document.getElementById('background-image-container');
+            const objectName = document.getElementById('object-name');
+            const objectSize = document.getElementById('object-size');
+            const objectDescription = document.getElementById('object-description');
+            
+            let currentObjectIndex = 0; // Menyimpan indeks objek yang sedang dilihat
+
+            // --- Mengatur Slider ---
+            slider.min = 0;
+            slider.max = universeData.length - 1;
+            slider.value = 5;
+            slider.step = 1;
+
+            // --- Fungsi untuk Update Tampilan ---
+            function updateDisplay(index) {
+                index = Math.max(0, Math.min(index, universeData.length - 1));
+                currentObjectIndex = index; // Perbarui indeks saat ini
+                
+                const item = universeData[index];
+
+                // GANTI background image menggunakan URL dari data
+                backgroundContainer.style.backgroundImage = `url(${item.imageUrl})`; 
+                
+                // Perbarui konten di kartu display
+                objectName.textContent = item.name;
+                objectSize.textContent = `Ukuran: ${item.sizeText}`;
+                objectDescription.textContent = item.description;
+            }
+            
+            // --- Event Listener untuk Slider ---
+            slider.addEventListener('input', (event) => {
+                const index = parseInt(event.target.value);
+                updateDisplay(index);
+            });
+
+            // --- Memuat Tampilan Awal ---
+            updateDisplay(parseInt(slider.value));
+
+        });
+    </script>
+
+</body>
+</html>
