@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Siswa - Desti Cahya Lestari</title>
+    <!-- Memuat Bootstrap 5 CSS dari CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Memuat Bootstrap Icons (bi) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Memuat Font Inter dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Menggunakan font Inter untuk seluruh dokumen */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background-color: #f8f9fa; 
+            scroll-behavior: smooth; 
+        }
+
+        /* TEMA WARNA CERAH: KUNING (UTAMA) & CYAN (AKSEN) */
+        :root {
+            --color-primary: #FFD700; /* Kuning Emas Cerah */
+            --color-accent: #00ADB5;  /* Cyan/Teal Cerah */
+            --color-dark-text: #333333;
+            --color-light-text: #ffffff;
+        }
+
+        /* Latar Belakang Utama (Hero & Kontak) */
+        .bg-theme-primary {
+            background-color: var(--color-primary) !important;
+            color: var(--color-dark-text) !important;
+        }
+        /* Navbar & Footer (Menggunakan gelap agar kontras) */
+        .bg-theme-dark {
+            background-color: #343a40 !important; 
+        }
+
+        /* Styling tambahan agar gambar profil terlihat bagus */
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            /* Garis luar dibuat hitam agar kontras dengan latar kuning */
+            border: 5px solid var(--color-dark-text) !important; 
+        }
+
+        /* Styling untuk tombol utama (menggunakan warna aksen cyan) */
+        .btn-custom-cta {
+            background-color: var(--color-accent) !important; 
+            border-color: var(--color-accent) !important;
+            color: var(--color-light-text) !important;
+            transition: all 0.3s ease;
+        }
+        .btn-custom-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #00939a !important; /* Slightly darker cyan */
+            border-color: #00939a !important;
+        }
+
+        /* Styling untuk kartu portofolio */
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 0.75rem; 
+            border: none;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-img-top {
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-img-container {
+            /* Placeholder styling for images */
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9ecef;
+            color: #6c757d;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Warna badge sesuai tema cerah */
+        .badge-theme-primary {
+            background-color: var(--color-primary) !important;
+            color: var(--color-dark-text) !important;
+        }
+        .badge-theme-accent {
+            background-color: var(--color-accent) !important;
+        }
+
+        /* Utility class untuk teks rata kiri di desktop, rata tengah di mobile */
+        @media (max-width: 991.98px) {
+            .text-lg-start-mobile-center {
+                text-align: center !important;
+            }
+            /* Pada mobile, gambar profil dipusatkan */
+            .profile-img-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        /* ---------------------------------------------------- */
+        /* --- CSS BARU: Perbaikan Layout Timeline Pendidikan --- */
+        /* ---------------------------------------------------- */
+        .timeline {
+            position: relative;
+            padding: 0;
+            list-style: none;
+            margin-left: 10px; /* Jarak dari kiri */
+        }
+        
+        /* Garis vertikal utama */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #dee2e6; /* Warna abu-abu muda */
+            left: 50px; /* Posisi garis tengah (setelah icon) */
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem; /* Jarak antar item */
+            padding-left: 70px; /* Ruang untuk ikon dan garis */
+        }
+
+        /* Ikon (lingkaran) pada timeline */
+        .timeline-icon {
+            color: var(--color-light-text);
+            background-color: var(--color-accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 30px; /* Posisi ikon menempel ke garis */
+            top: 0;
+            box-shadow: 0 0 0 3px #fff, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 3px rgba(0, 0, 0, 0.05);
+            font-size: 1.1rem;
+        }
+        .timeline-text {
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#main-navbar" data-bs-offset="56">
+
+    <!-- 1. Navbar (Menggunakan warna gelap agar font putih dan aksen kuning terlihat jelas) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-theme-dark sticky-top shadow" id="main-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#beranda">
+                <i class="bi bi-mortarboard-fill me-2 text-theme-primary"></i> DESTI CAHYA LESTARI.
+            </a>
+            
+            <!-- LOGO SEKOLAH di Pojok Kanan Atas (Tampil di Kanan Toggler pada Mobile) -->
+            <div class="d-lg-none me-3">
+                <!-- GANTI URL GAMBAR INI DENGAN LOGO SEKOLAH -->
+                <img src="logo sma.jpeg" alt="Logo Sekolah" style="height: 35px; width: 35px;" class="shadow-sm rounded-circle" onerror="this.src='https://placehold.co/35x35/343a40/FFD700?text=Logo'">
+                <!-- Akhir KODE GAMBAR Logo Mobile -->
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <!-- Tautan aktif diberi warna kuning (var(--color-primary)) melalui CSS -->
+                        <a class="nav-link active" aria-current="page" href="#beranda">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tentang">Tentang Saya</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#prestasi">Prestasi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#kontak">Kontak</a>
+                    </li>
+                </ul>
+                <!-- LOGO SEKOLAH di Pojok Kanan Atas (Tampil di Kanan Nav Links pada Desktop) -->
+                <div class="d-none d-lg-block ms-4">
+                    <!-- GANTI URL GAMBAR INI DENGAN LOGO SEKOLAH -->
+                    <img src="logo sma.jpeg" alt="Logo Sekolah" style="height: 40px; width: 40px; border-radius: 50%; border: 2px solid var(--color-primary);" class="shadow-sm" onerror="this.src='https://placehold.co/40x40/343a40/FFD700?text=Logo'">
+                    <!-- Akhir KODE GAMBAR Logo Desktop -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section (Latar Belakang Kuning Cerah) -->
+    <section class="bg-theme-primary min-vh-100 d-flex align-items-center py-5" id="beranda">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Kolom Kiri: Gambar Profil -->
+                <div class="col-lg-6 text-lg-start-mobile-center profile-img-container">
+                    <!-- KODE GAMBAR (untuk Anda ganti) -->
+                    <div class="rounded-circle shadow-lg profile-img border-5">
+                        <!-- Ganti tag <img> di bawah ini dengan foto Anda -->
+                        <img src="foto desti.jpeg" 
+                            alt="Foto Profil" 
+                            class="rounded-circle profile-img shadow-lg"
+                            onerror="this.src='https://placehold.co/250x250/FFD700/333333?text=Foto+Desti';"
+                            style="width: 100%; height: 100%; border: none !important;">
+                        <!-- Akhir Kode Gambar -->
+                    </div>
+                    <p class="text-center mt-2 text-muted fw-semibold"></p>
+                </div>
+                
+                <!-- Kolom Kanan: Teks & CTA -->
+                <div class="col-lg-6 text-lg-start-mobile-center">
+                    <p class="mb-2 fs-5">Halo, Perkenalkan Saya</p>
+                    <h1 class="display-4 fw-bold mb-3">Desti Cahya Lestari</h1>
+                    <p class="fs-4 mb-4">Siswa Kelas XII-3 SMAN 10 Garut</p>
+                    
+                    <!-- Tombol CTA (menggunakan warna aksen Cyan) -->
+                    <a href="#prestasi" class="btn btn-custom-cta btn-lg me-3 fw-semibold">
+                        <i class="bi bi-trophy me-2"></i>Lihat Prestasi
+                    </a>
+                    <a href="#kontak" class="btn btn-outline-dark btn-lg fw-semibold">
+                        <i class="bi bi-envelope-fill me-2"></i>Hubungi Saya
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. About Section (Bagian Tentang) -->
+    <section class="bg-light py-5" id="tentang">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5">Tentang Saya & Keahlian</h2>
+            <div class="row g-5">
+                
+                <!-- Kolom Kiri: Ringkasan Diri, Prestasi Utama & Timeline Pendidikan -->
+                <div class="col-lg-6">
+                    <p class="lead">
+                        Saya Desti Cahya Lestari, seorang siswi kelas XII-3 di SMAN 10 Garut yang bersemangat tinggi dan fokus pada pengembangan diri. Saya memiliki minat besar di bidang Seni, kreativitas, dan Kepemimpinan, yang terbukti dari peran aktif saya di sekolah.
+                    </p>
+                    
+                    <!-- DAFTAR PRESTASI UTAMA (Badge) -->
+                    <hr>
+                    <h4 class="mb-3">Prestasi & Hobi Utama</h4>
+                    <span class="badge badge-theme-primary fw-semibold p-2 mb-2 me-2 shadow-sm">
+                        <i class="bi bi-star-fill me-1"></i> Ketua Umum Ekstrakurikuler Seni (TenArs)
+                    </span>
+                    <span class="badge badge-theme-accent fw-semibold p-2 mb-2 me-2 shadow-sm">
+                        <i class="bi bi-pencil-square me-1"></i> Penulis Puisi Terbaik Nasional
+                    </span>
+                    <span class="badge bg-secondary fw-semibold p-2 mb-2 shadow-sm">
+                        <i class="bi bi-book me-1"></i> Hobi: Membaca Buku & Menulis
+                    </span>
+                    
+                    <!-- TIMELINE PENDIDIKAN -->
+                    <hr>
+                    <h4 class="mb-4 border-bottom pb-2">Riwayat Pendidikan (Timeline)</h4>
+                    <div class="timeline">
+                        
+                        <!-- ITEM 1: SMAN 10 Garut (SMA) -->
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="bi bi-mortarboard-fill"></i></div> <!-- Icon disesuaikan -->
+                            <p class="timeline-text text-uppercase">SMA</p> <!-- Teks jelas dan tebal -->
+                            <h6 class="fw-bold mb-1">SMAN 10 Garut (2022 - Sekarang)</h6>
+                            <p class="text-muted small mb-0">Kelas XII-3</p>
+                            <p class="small">Fokus pada pendidikan dan cita-cita.</p>
+                        </div>
+                        
+                        <!-- ITEM 2: SMPN 3 LIMBANGAN (SMP) -->
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="bi bi-building"></i></div>
+                            <p class="timeline-text text-uppercase">SMP</p> <!-- Teks jelas dan tebal -->
+                            <h6 class="fw-bold mb-1">SMPN 3 LIMBANGAN (2019 - 2022)</h6>
+                            <p class="text-muted small mb-0">Lulus dengan dasar akademik yang kuat.</p>
+                        </div>
+                        
+                        <!-- ITEM 3: SDN 1 LINGKUNGPASIR (SD) -->
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="bi bi-house"></i></div>
+                            <p class="timeline-text text-uppercase">SD</p> <!-- Teks jelas dan tebal -->
+                            <h6 class="fw-bold mb-1">SDN 1 LINGKUNGPASIR (2013 - 2019)</h6>
+                            <p class="text-muted small mb-0">Fondasi disiplin dan minat literasi.</p>
+                        </div>
+                        
+                        <!-- ITEM 4: PAUD & TK AL-HUDLORI (PAUD/TK) -->
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="bi bi-balloon-fill"></i></div>
+                            <p class="timeline-text text-uppercase">PAUD/TK</p> <!-- Teks jelas dan tebal -->
+                            <h6 class="fw-bold mb-1">PAUD & TK AL-HUDLORI (Pra-SD)</h6>
+                            <p class="text-muted small mb-0">Memulai jejak belajar sejak usia dini.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kolom Kanan: Daftar Keahlian -->
+                <div class="col-lg-6">
+                    <h4 class="mb-3">Keahlian & Minat (Skillset)</h4>
+                    <div class="list-group shadow-sm">
+                        
+                        <div class="list-group-item d-flex align-items-start">
+                            <i class="bi bi-people-fill fs-4 text-theme-primary me-3 pt-1"></i>
+                            <div>
+                                <strong>Kepemimpinan & Organisasi</strong> - Terlatih sebagai Ketua Umum Ekstrakurikuler TenArs. Mampu mengambil keputusan, memotivasi tim, dan mengelola proyek.
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item d-flex align-items-start">
+                            <i class="bi bi-palette-fill fs-4 text-theme-accent me-3 pt-1"></i>
+                            <div>
+                                <strong>Seni dan Kreativitas</strong> - Keahlian dalam menulis puisi (Penulis Terbaik Nasional), bernyanyi, serta kemampuan untuk menghasilkan ide-ide baru yang inovatif.
+                            </div>
+                        </div>
+
+                        <!-- BARU: Keahlian Drama/Teater -->
+                        <div class="list-group-item d-flex align-items-start">
+                            <i class="bi bi-mask fs-4 text-success me-3 pt-1"></i>
+                            <div>
+                                <strong>Drama & Teater</strong> - Aktif dalam ekstrakurikuler teater, mengembangkan kemampuan ekspresi diri, panggung, dan kerja sama tim.
+                            </div>
+                        </div>
+                        <!-- AKHIR BARU -->
+                        
+                        <div class="list-group-item d-flex align-items-start">
+                            <i class="bi bi-flask-fill fs-4 text-info me-3 pt-1"></i>
+                            <div>
+                                <strong>Ilmu Pengetahuan Alam (Kimia)</strong> - Minat kuat dan kemampuan analisis di Kimia. Senang melakukan penelitian sederhana dan memecahkan masalah ilmiah.
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item d-flex align-items-start">
+                            <i class="bi bi-bicycle fs-4 text-danger me-3 pt-1"></i>
+                            <div>
+                                <strong>Olahraga & Kebugaran</strong> - Memiliki hobi dan aktif dalam berbagai kegiatan olahraga. Menunjukkan dedikasi dan semangat berkompetisi.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Portfolio Section (Bagian Prestasi) -->
+    <section class="py-5" id="prestasi">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5">Portofolio Prestasi Saya</h2>
+            
+            <div class="row g-4 justify-content-center"> <!-- Ditambahkan justify-content-center untuk mobile -->
+                
+                <!-- Card Prestasi 1: Kepemimpinan -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <!-- KODE GAMBAR (Untuk Anda ganti dengan foto kegiatan/sertifikat) -->
+                        <div class="card-img-container">
+                             <img src="eskul.jpg" class="card-img-top" alt="Sertifikat Kepemimpinan" 
+                                 onerror="this.src='https://placehold.co/400x200/FFD700/333333?text=FOTO+ESKUL';"
+                                 style="height: 100%;">
+                        </div>
+                        <!-- Akhir Kode Gambar -->
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title fw-bold fs-5">Ketua Umum Ekstrakurikuler TenArs (Seni)</h3>
+                            <p class="card-text text-muted mb-3 flex-grow-1">
+                                Memimpin program dan anggota ekstrakurikuler TenArs selama satu periode kepengurusan.
+                            </p>
+                            <span class="badge badge-theme-primary mt-auto">Kepemimpinan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Prestasi 2: Penulis Terbaik Puisi -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <!-- KODE GAMBAR (Untuk Anda ganti dengan foto piagam/buku) -->
+                        <div class="card-img-container">
+                             <img src="sertifikat.jpg" class="card-img-top" alt="Piagam Penulis Terbaik" 
+                                 onerror="this.src='https://placehold.co/400x200/00ADB5/ffffff?text=FOTO+SERTIFIKAT';"
+                                 style="height: 100%;">
+                        </div>
+                        <!-- Akhir Kode Gambar -->
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title fw-bold fs-5">Penulis Terbaik Pentas Cerita Nasional</h3>
+                            <p class="card-text text-muted mb-3 flex-grow-1">
+                                Dikenal sebagai penulis terbaik dalam event tingkat nasional, kategori puisi.
+                            </p>
+                            <span class="badge badge-theme-accent mt-auto">Seni & Literasi</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card Prestasi 3: Hobi (Olahraga) -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <!-- KODE GAMBAR (Untuk Anda ganti dengan foto kegiatan olahraga) -->
+                        <div class="card-img-container">
+                            <img src="binjas.jpg" class="card-img-top" alt="Karya Tulis"
+                                 onerror="this.src='https://placehold.co/400x200/dc3545/ffffff?text=FOTO+OLAHRAGA';"
+                                 style="height: 100%;">
+                        </div>
+                        <!-- Akhir Kode Gambar -->
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title fw-bold fs-5">Aktif dalam Kegiatan Olahraga</h3>
+                            <p class="card-text text-muted mb-3 flex-grow-1">
+                                Rutin berolahraga dan terlibat dalam sebuah komunitas olahraga.
+                            </p>
+                            <span class="badge bg-danger mt-auto">Hobi Olahraga</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Prestasi 4: Minat (Kimia) -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <!-- KODE GAMBAR (Untuk Anda ganti dengan skema/proyek kimia) -->
+                        <div class="card-img-container">
+                             <img src="kimia.jpg" class="card-img-top" alt="Skema Kimia" 
+                                 onerror="this.src='https://placehold.co/400x200/0dcaf0/333333?text=FOTO+KIMIA';"
+                                 style="height: 100%;">
+                        </div>
+                        <!-- Akhir Kode Gambar -->
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title fw-bold fs-5">Minat Kuat pada Ilmu Kimia</h3>
+                            <p class="card-text text-muted mb-3 flex-grow-1">
+                                Fokus pada pemahaman konsep dan eksperimen Kimia, sebagai bekal masuk jurusan sains.
+                            </p>
+                            <span class="badge bg-info mt-auto">Minat Sains</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact Section (Latar Belakang Kuning Cerah) -->
+    <section class="bg-theme-primary py-5" id="kontak">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-4">Hubungi Saya</h2>
+            <p class="text-center text-muted mb-5">
+                Kirim pesan langsung melalui formulir ini atau cek informasi kontak lainnya.
+            </p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card p-4 shadow-lg">
+                        <form>
+                            <div class="row g-3">
+                                <!-- Nama Depan & Belakang -->
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">Nama Depan</label>
+                                    <input type="text" class="form-control rounded" id="firstName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Nama Belakang</label>
+                                    <input type="text" class="form-control rounded" id="lastName" required>
+                                </div>
+                                
+                                <!-- Email (dengan Input Group) -->
+                                <div class="col-12">
+                                    <label for="email" class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text rounded-start"><i class="bi bi-at"></i></span>
+                                        <input type="email" class="form-control rounded-end" id="email" placeholder="contoh@domain.com" required>
+                                    </div>
+                                </div>
+
+                                <!-- Pesan -->
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Pesan</label>
+                                    <textarea class="form-control rounded" id="message" rows="4" required></textarea>
+                                </div>
+                                
+                                <!-- Checkbox -->
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="agreementCheck" required>
+                                        <label class="form-check-label" for="agreementCheck">
+                                            Saya setuju untuk dihubungi kembali.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Tombol Kirim (menggunakan warna aksen Cyan) -->
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-custom-cta btn-lg fw-bold w-100 rounded-pill mt-3">
+                                        <i class="bi bi-send-fill me-2"></i>Kirim Pesan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Footer (Menggunakan warna gelap) -->
+    <footer class="bg-theme-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    
+                    <!-- Ikon Media Sosial (Aksen Kuning) -->
+                    <div class="d-flex justify-content-center gap-3 mb-3">
+                        
+                        <!-- Instagram -->
+                        <a href="#" class="bg-white bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center text-theme-primary text-decoration-none" style="width: 45px; height: 45px; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)';">
+                            <i class="bi bi-instagram fs-5"></i>
+                        </a>
+                        
+                        <!-- LinkedIn -->
+                        <a href="#" class="bg-white bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center text-theme-primary text-decoration-none" style="width: 45px; height: 45px; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)';">
+                            <i class="bi bi-linkedin fs-5"></i>
+                        </a>
+                        
+                        <!-- GitHub -->
+                        <a href="#" class="bg-white bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center text-theme-primary text-decoration-none" style="width: 45px; height: 45px; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)';">
+                            <i class="bi bi-github fs-5"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Hak Cipta -->
+                    <p class="mb-0">© 2025 Desti Cahya Lestari. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Memuat Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
